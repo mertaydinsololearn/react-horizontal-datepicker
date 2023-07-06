@@ -7,6 +7,7 @@ import { DateView } from "./DateView";
 import { MonthView } from './MonthView';
 
 const DatePicker = (props) => {
+    console.log("src a");
     const next = (event) => {
         event.preventDefault();
         const e = document.getElementById('container');
