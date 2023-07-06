@@ -52,4 +52,4 @@ const DatePicker = (props) => {
     )
 }
 
-export default { DatePicker }
+export { DatePicker }
