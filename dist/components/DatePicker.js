@@ -29,7 +29,7 @@ const DatePicker = props => {
   const startDate = props.startDate || new Date();
   const backDate = props.prevDate || null;
   const lastDate = addDays(startDate, props.days || 90);
-  const prevDate = addDays(-(backDate, props.days || 90));
+  const prevDate = addDays(startDate, -props.days);
 
   let buttonzIndex = {
     zIndex: 2
