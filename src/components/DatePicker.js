@@ -17,14 +17,17 @@ const DatePicker = (props) => {
     const prev = (event) => {
         event.preventDefault();
         const e = document.getElementById('container');
-        const width = e ? e.getBoundingClientRect().width : null;
+        const width = e ? e.getBoundingClientRect().width : 0;
         e.scrollLeft -= width - 60;
     };
 
     const primaryColor = props.color? (props.color.indexOf("rgb") > 0?props.color:hexToRgb(props.color)):'rgb(54, 105, 238)';
 
     const startDate = props.startDate || new Date();
+    const backDate = props.prevDate || null;
     const lastDate = addDays(startDate, props.days || 90);
+    const prevDate = addDays(-(backDate, props.days || 90));
+    const locale = props.locale;
 
     let buttonzIndex = {zIndex: 2};
     let buttonStyle = {background: primaryColor};
@@ -41,7 +44,7 @@ const DatePicker = (props) => {
             <div className={styles.buttonWrapper} style={buttonzIndex}>
                 <button className={styles.button} style={buttonStyle} onClick={prev}>&lt;</button>
             </div>
-            <Component {...props} primaryColor={primaryColor} startDate={startDate} lastDate={lastDate}/>
+            <Component {...props} primaryColor={primaryColor} startDate={startDate} lastDate={lastDate} prevDate={prevDate} locale={locale}/>
             <div className={styles.buttonWrapper} style={buttonzIndex}>
                 <button className={styles.button} style={buttonStyle} onClick={next}>&gt;</button>
             </div>
@@ -49,4 +52,4 @@ const DatePicker = (props) => {
     )
 }
 
-export { DatePicker }
+export default { DatePicker }

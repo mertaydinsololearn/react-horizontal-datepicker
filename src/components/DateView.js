@@ -12,7 +12,7 @@ import {
 } from "date-fns";
 
 
-const DateView = ({startDate, lastDate, selectDate, getSelectedDay, primaryColor, labelFormat, marked}) => {
+const DateView = ({startDate, lastDate, prevDate, locale, selectDate, getSelectedDay, primaryColor, labelFormat, marked}) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const firstSection = {marginLeft: '40px'};
     const selectedStyle = {fontWeight:"bold",width:"45px",height:"45px",borderRadius:"50%",border:`2px solid ${primaryColor}`,color:primaryColor};
@@ -50,13 +50,12 @@ const DateView = ({startDate, lastDate, selectDate, getSelectedDay, primaryColor
         let days = [];
 
         // const styleItemMarked = marked ? styles.dateDayItemMarked : styles.dateDayItem;
-
-        for (let i = 0; i <= differenceInMonths(lastDate, startDate); i++) {
+        for (let i = 0; i <= differenceInMonths(startDate, prevDate); i++) {
             let start, end;
-            const month = startOfMonth(addMonths(startDate, i));
+            const month = startOfMonth(addMonths(prevDate, i));
 
-            start = i === 0 ? Number(format(startDate, dateFormat)) - 1 : 0;
-            end = i === differenceInMonths(lastDate, startDate) ? Number(format(lastDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
+            start = i === 0 ? Number(format(prevDate, dateFormat, {locale: locale})) - 1 : 0;
+            end = i === differenceInMonths(startDate, prevDate) ? Number(format(lastDate, "d", {locale:locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
 
             for (let j = start; j < end; j++) {
                 let currentDay = addDays(month, j);
@@ -68,8 +67,8 @@ const DateView = ({startDate, lastDate, selectDate, getSelectedDay, primaryColor
                          key={currentDay}
                          onClick={() => onDateClick(currentDay)}
                     >
-                        <div className={styles.dayLabel}>{format(currentDay, dayFormat)}</div>
-                        <div className={styles.dateLabel}>{format(currentDay, dateFormat)}</div>
+                        <div className={styles.dayLabel}>{format(currentDay, dayFormat, {locale: locale})}</div>
+                        <div className={styles.dateLabel}>{format(currentDay, dateFormat, {locale: locale})}</div>
                         {getMarked(currentDay)}
                     </div>
                 );
@@ -79,7 +78,46 @@ const DateView = ({startDate, lastDate, selectDate, getSelectedDay, primaryColor
                      key={month}
                 >
                     <span className={styles.monthYearLabel} style={labelColor}>
-                        {format(month, labelFormat || "MMMM yyyy")}
+                        {format(month, labelFormat || "MMMM yyyy", {locale: locale})}
+                    </span>
+                    <div className={styles.daysContainer} style={i===0?firstSection:null}>
+                        {days}
+                    </div>
+                </div>
+            );
+            days = [];
+
+        }
+
+        for (let i = 0; i <= differenceInMonths(lastDate, startDate); i++) {
+            let start, end;
+            const month = startOfMonth(addMonths(startDate, i));
+
+            start = i === 0 ? Number(format(startDate, dateFormat, {locale: locale})) - 1 : 0;
+            end = i === differenceInMonths(lastDate, startDate) ? Number(format(lastDate, "d", {locale:locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
+
+            for (let j = start; j < end; j++) {
+                let currentDay = addDays(month, j);
+
+                days.push(
+                    <div id={`${getId(currentDay)}`}
+                         className={marked ? styles.dateDayItemMarked : styles.dateDayItem}
+                         style={getStyles(currentDay)}
+                         key={currentDay}
+                         onClick={() => onDateClick(currentDay)}
+                    >
+                        <div className={styles.dayLabel}>{format(currentDay, dayFormat, {locale: locale})}</div>
+                        <div className={styles.dateLabel}>{format(currentDay, dateFormat, {locale: locale})}</div>
+                        {getMarked(currentDay)}
+                    </div>
+                );
+            }
+            months.push(
+                <div className={styles.monthContainer}
+                     key={month}
+                >
+                    <span className={styles.monthYearLabel} style={labelColor}>
+                        {format(month, labelFormat || "MMMM yyyy", {locale: locale})}
                     </span>
                     <div className={styles.daysContainer} style={i===0?firstSection:null}>
                         {days}
