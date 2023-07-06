@@ -7,9 +7,10 @@ import hexToRgb from "../global/helpers/hexToRgb";
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
 import { MonthView } from './MonthView';
+import { tr } from 'date-fns/locale';
+
 
 const DatePicker = props => {
-  console.log("dist a");
   const next = event => {
     event.preventDefault();
     const e = document.getElementById('container');
@@ -20,13 +21,16 @@ const DatePicker = props => {
   const prev = event => {
     event.preventDefault();
     const e = document.getElementById('container');
-    const width = e ? e.getBoundingClientRect().width : null;
+    const width = e ? e.getBoundingClientRect().width : 0;
     e.scrollLeft -= width - 60;
   };
 
   const primaryColor = props.color ? props.color.indexOf("rgb") > 0 ? props.color : hexToRgb(props.color) : 'rgb(54, 105, 238)';
   const startDate = props.startDate || new Date();
+  const backDate = props.prevDate || null;
   const lastDate = addDays(startDate, props.days || 90);
+  const prevDate = addDays(-(backDate, props.days || 90));
+
   let buttonzIndex = {
     zIndex: 2
   };
@@ -58,7 +62,9 @@ const DatePicker = props => {
   }, "<")), /*#__PURE__*/React.createElement(Component, _extends({}, props, {
     primaryColor: primaryColor,
     startDate: startDate,
-    lastDate: lastDate
+    lastDate: lastDate,
+    prevDate: prevDate,
+    locale: tr
   })), /*#__PURE__*/React.createElement("div", {
     className: styles.buttonWrapper,
     style: buttonzIndex

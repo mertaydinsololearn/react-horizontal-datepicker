@@ -6,6 +6,8 @@ import { addDays, addMonths, differenceInMonths, format, isSameDay, lastDayOfMon
 const DateView = ({
   startDate,
   lastDate,
+  prevDate,
+  locale,
   selectDate,
   getSelectedDay,
   primaryColor,
@@ -41,11 +43,11 @@ const DateView = ({
     const months = [];
     let days = [];
 
-    for (let i = 0; i <= differenceInMonths(lastDate, startDate); i++) {
+    for (let i = 0; i <= differenceInMonths(startDate, prevDate); i++) {
       let start, end;
-      const month = startOfMonth(addMonths(startDate, i));
-      start = i === 0 ? Number(format(startDate, dateFormat)) - 1 : 0;
-      end = i === differenceInMonths(lastDate, startDate) ? Number(format(lastDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
+      const month = startOfMonth(addMonths(prevDate, i));
+      start = i === 0 ? Number(format(prevDate, dateFormat, {locale: locale})) - 1 : 0;
+      end = i === differenceInMonths(startDate, prevDate) ? Number(format(lastDate, "d", {locale: locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
 
       for (let j = start; j < end; j++) {
         let currentDay = addDays(month, j);
@@ -57,9 +59,9 @@ const DateView = ({
           onClick: () => onDateClick(currentDay)
         }, /*#__PURE__*/React.createElement("div", {
           className: styles.dayLabel
-        }, format(currentDay, dayFormat)), /*#__PURE__*/React.createElement("div", {
+        }, format(currentDay, dayFormat, {locale: locale})), /*#__PURE__*/React.createElement("div", {
           className: styles.dateLabel
-        }, format(currentDay, dateFormat))));
+        }, format(currentDay, dateFormat, {locale: locale}))));
       }
 
       months.push( /*#__PURE__*/React.createElement("div", {
@@ -68,7 +70,41 @@ const DateView = ({
       }, /*#__PURE__*/React.createElement("span", {
         className: styles.monthYearLabel,
         style: labelColor
-      }, format(month, labelFormat || "MMMM yyyy")), /*#__PURE__*/React.createElement("div", {
+      }, format(month, labelFormat || "MMMM yyyy", {locale: locale})), /*#__PURE__*/React.createElement("div", {
+        className: styles.daysContainer,
+        style: i === 0 ? firstSection : null
+      }, days)));
+      days = [];
+    }
+
+    for (let i = 0; i <= differenceInMonths(lastDate, startDate); i++) {
+      let start, end;
+      const month = startOfMonth(addMonths(startDate, i));
+      start = i === 0 ? Number(format(startDate, dateFormat, {locale: locale})) - 1 : 0;
+      end = i === differenceInMonths(lastDate, startDate) ? Number(format(lastDate, "d", {locale: locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
+
+      for (let j = start; j < end; j++) {
+        let currentDay = addDays(month, j);
+        days.push( /*#__PURE__*/React.createElement("div", {
+          id: `${getId(currentDay)}`,
+          className: styles.dateDayItem,
+          style: getStyles(currentDay),
+          key: currentDay,
+          onClick: () => onDateClick(currentDay)
+        }, /*#__PURE__*/React.createElement("div", {
+          className: styles.dayLabel
+        }, format(currentDay, dayFormat, {locale: locale})), /*#__PURE__*/React.createElement("div", {
+          className: styles.dateLabel
+        }, format(currentDay, dateFormat, {locale: locale}))));
+      }
+
+      months.push( /*#__PURE__*/React.createElement("div", {
+        className: styles.monthContainer,
+        key: month
+      }, /*#__PURE__*/React.createElement("span", {
+        className: styles.monthYearLabel,
+        style: labelColor
+      }, format(month, labelFormat || "MMMM yyyy", {locale: locale})), /*#__PURE__*/React.createElement("div", {
         className: styles.daysContainer,
         style: i === 0 ? firstSection : null
       }, days)));
