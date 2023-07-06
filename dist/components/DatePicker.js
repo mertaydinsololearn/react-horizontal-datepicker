@@ -15,14 +15,16 @@ const DatePicker = props => {
     event.preventDefault();
     const e = document.getElementById('container');
     const width = e ? e.getBoundingClientRect().width : null;
+    console.log("next", width);
     e.scrollLeft += width - 60;
   };
 
   const prev = event => {
     event.preventDefault();
     const e = document.getElementById('container');
-    const width = e ? e.getBoundingClientRect().width : 0;
+    const width = e ? e.getBoundingClientRect().width : null;
     e.scrollLeft -= width - 60;
+    console.log("prev:", width);
   };
 
   const primaryColor = props.color ? props.color.indexOf("rgb") > 0 ? props.color : hexToRgb(props.color) : 'rgb(54, 105, 238)';

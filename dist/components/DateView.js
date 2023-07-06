@@ -13,6 +13,7 @@ const DateView = ({
   primaryColor,
   labelFormat
 }) => {
+  console.log("prevdate", prevDate);
   const [selectedDate, setSelectedDate] = useState(null);
   const firstSection = {
     marginLeft: '40px'
@@ -77,6 +78,7 @@ const DateView = ({
       days = [];
     }
 
+
     for (let i = 0; i <= differenceInMonths(lastDate, startDate); i++) {
       let start, end;
       const month = startOfMonth(addMonths(startDate, i));
@@ -110,6 +112,8 @@ const DateView = ({
       }, days)));
       days = [];
     }
+
+    console.log(days, months);
 
     return /*#__PURE__*/React.createElement("div", {
       id: "container",
