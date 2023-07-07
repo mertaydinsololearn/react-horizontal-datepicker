@@ -1,21 +1,18 @@
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 /* eslint-disable react-hooks/exhaustive-deps */
-import { addDays } from "date-fns";
+import { addDays, subDays } from "date-fns";
 import React from "react";
 import hexToRgb from "../global/helpers/hexToRgb";
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
 import { MonthView } from './MonthView';
-import { tr } from 'date-fns/locale';
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 const DatePicker = props => {
   const next = event => {
     event.preventDefault();
     const e = document.getElementById('container');
     const width = e ? e.getBoundingClientRect().width : null;
-    console.log("next", width);
     e.scrollLeft += width - 60;
   };
 
@@ -24,14 +21,13 @@ const DatePicker = props => {
     const e = document.getElementById('container');
     const width = e ? e.getBoundingClientRect().width : null;
     e.scrollLeft -= width - 60;
-    console.log("prev:", width);
   };
 
   const primaryColor = props.color ? props.color.indexOf("rgb") > 0 ? props.color : hexToRgb(props.color) : 'rgb(54, 105, 238)';
   const startDate = props.startDate || new Date();
   const backDate = props.prevDate || null;
-  const lastDate = addDays(startDate, props.days || 90);
-  const prevDate = addDays(startDate, -props.days);
+  const lastDate = addDays(startDate, props.endDate || props.days || 90);
+  const prevDate = subDays(startDate, backDate || 90);
 
   let buttonzIndex = {
     zIndex: 2
@@ -66,7 +62,7 @@ const DatePicker = props => {
     startDate: startDate,
     lastDate: lastDate,
     prevDate: prevDate,
-    locale: tr
+    locale: props.locale
   })), /*#__PURE__*/React.createElement("div", {
     className: styles.buttonWrapper,
     style: buttonzIndex

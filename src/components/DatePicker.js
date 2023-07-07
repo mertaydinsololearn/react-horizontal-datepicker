@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { addDays } from "date-fns";
+import { addDays, subDays } from "date-fns";
 import React from "react";
 import hexToRgb from "../global/helpers/hexToRgb";
 import styles from "./DatePicker.module.css"
@@ -7,7 +7,6 @@ import { DateView } from "./DateView";
 import { MonthView } from './MonthView';
 
 const DatePicker = (props) => {
-    console.log("src a");
     const next = (event) => {
         event.preventDefault();
         const e = document.getElementById('container');
@@ -18,7 +17,7 @@ const DatePicker = (props) => {
     const prev = (event) => {
         event.preventDefault();
         const e = document.getElementById('container');
-        const width = e ? e.getBoundingClientRect().width : 0;
+        const width = e ? e.getBoundingClientRect().width : null;
         e.scrollLeft -= width - 60;
     };
 
@@ -26,9 +25,8 @@ const DatePicker = (props) => {
 
     const startDate = props.startDate || new Date();
     const backDate = props.prevDate || null;
-    const lastDate = addDays(startDate, props.days || 90);
-    const prevDate = addDays(-(backDate, props.days || 90));
-    const locale = props.locale;
+    const lastDate = addDays(startDate, props.endDate || props.days || 90);
+    const prevDate = subDays(startDate, backDate || 90);
 
     let buttonzIndex = {zIndex: 2};
     let buttonStyle = {background: primaryColor};
@@ -45,7 +43,7 @@ const DatePicker = (props) => {
             <div className={styles.buttonWrapper} style={buttonzIndex}>
                 <button className={styles.button} style={buttonStyle} onClick={prev}>&lt;</button>
             </div>
-            <Component {...props} primaryColor={primaryColor} startDate={startDate} lastDate={lastDate} prevDate={prevDate} locale={locale}/>
+            <Component {...props} primaryColor={primaryColor} startDate={startDate} lastDate={lastDate} prevDate={prevDate} locale={props.locale}/>
             <div className={styles.buttonWrapper} style={buttonzIndex}>
                 <button className={styles.button} style={buttonStyle} onClick={next}>&gt;</button>
             </div>

@@ -50,12 +50,12 @@ const DateView = ({startDate, lastDate, prevDate, locale, selectDate, getSelecte
         let days = [];
 
         // const styleItemMarked = marked ? styles.dateDayItemMarked : styles.dateDayItem;
-        for (let i = 0; i <= differenceInMonths(startDate, prevDate); i++) {
+        for (let i = 0; i <= differenceInMonths(startDate, prevDate) + 1; i++) {
             let start, end;
             const month = startOfMonth(addMonths(prevDate, i));
 
             start = i === 0 ? Number(format(prevDate, dateFormat, {locale: locale})) - 1 : 0;
-            end = i === differenceInMonths(startDate, prevDate) ? Number(format(lastDate, "d", {locale:locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
+            end = i === differenceInMonths(startDate, prevDate) ? Number(format(startDate, "d", {locale:locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
 
             for (let j = start; j < end; j++) {
                 let currentDay = addDays(month, j);
