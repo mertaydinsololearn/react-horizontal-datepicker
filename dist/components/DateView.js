@@ -47,7 +47,7 @@ const DateView = ({
     for (let i = 0; i <= differenceInMonths(startDate, prevDate); i++) {
       let start, end;
       const month = startOfMonth(addMonths(prevDate, i));
-      start = i === 0 ? Number(format(startDate, dateFormat)) - 1 : 0;
+      start = i === 0 ? Number(format(prevDate, dateFormat)) - 1 : 0;
       end = i === differenceInMonths(startDate, prevDate) ? Number(format(startDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
 
       for (let j = start; j < end; j++) {
