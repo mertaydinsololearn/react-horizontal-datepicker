@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import styles from "./DatePicker.module.css";
-import { addDays, subDays, addMonths, subMonths, differenceInMonths, format, isSameDay, lastDayOfMonth, startOfMonth } from "date-fns";
+import { addDays, addMonths, differenceInMonths, format, isSameDay, lastDayOfMonth, startOfMonth } from "date-fns";
 
 const DateView = ({
   startDate,
@@ -43,19 +43,20 @@ const DateView = ({
     const months = [];
     let days = [];
 
-    for (let i = 0; i <= differenceInMonths(startDate, prevDate) + 1; i++) {
+  
+    for (let i = 0; i <= differenceInMonths(startDate, prevDate); i++) {
       let start, end;
-      const month = startOfMonth(subMonths(prevDate, i));
-      start = i === 0 ? Number(format(prevDate, dateFormat, {locale: locale})) - 1 : 0;
-      end = i === differenceInMonths(startDate, prevDate) ? Number(format(startDate, "d", {locale: locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
+      const month = startOfMonth(addMonths(prevDate, i));
+      start = i === 0 ? Number(format(startDate, dateFormat)) - 1 : 0;
+      end = i === differenceInMonths(startDate, prevDate) ? Number(format(startDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
 
       for (let j = start; j < end; j++) {
-        let currentDay = subDays(month, j);
+        let currentDay = addDays(month, j);
         days.push( /*#__PURE__*/React.createElement("div", {
           id: `${getId(currentDay)}`,
           className: styles.dateDayItem,
           style: getStyles(currentDay),
-          key: currentDay,
+          key: currentDay.toString() + Math.random(),
           onClick: () => onDateClick(currentDay)
         }, /*#__PURE__*/React.createElement("div", {
           className: styles.dayLabel
@@ -81,8 +82,8 @@ const DateView = ({
     for (let i = 0; i <= differenceInMonths(lastDate, startDate); i++) {
       let start, end;
       const month = startOfMonth(addMonths(startDate, i));
-      start = i === 0 ? Number(format(startDate, dateFormat, {locale: locale})) - 1 : 0;
-      end = i === differenceInMonths(lastDate, startDate) ? Number(format(lastDate, "d", {locale: locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
+      start = i === 0 ? Number(format(startDate, dateFormat)) - 1 : 0;
+      end = i === differenceInMonths(lastDate, startDate) ? Number(format(lastDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
 
       for (let j = start; j < end; j++) {
         let currentDay = addDays(month, j);
@@ -90,7 +91,7 @@ const DateView = ({
           id: `${getId(currentDay)}`,
           className: styles.dateDayItem,
           style: getStyles(currentDay),
-          key: currentDay,
+          key: currentDay.toString() + Math.random(),
           onClick: () => onDateClick(currentDay)
         }, /*#__PURE__*/React.createElement("div", {
           className: styles.dayLabel
