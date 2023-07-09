@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import styles from "./DatePicker.module.css";
-import { addDays, addMonths, differenceInMonths, format, isSameDay, lastDayOfMonth, startOfMonth } from "date-fns";
+import { addDays, subDays, addMonths, subMonths, differenceInMonths, format, isSameDay, lastDayOfMonth, startOfMonth } from "date-fns";
 
 const DateView = ({
   startDate,
@@ -45,12 +45,12 @@ const DateView = ({
 
     for (let i = 0; i <= differenceInMonths(startDate, prevDate) + 1; i++) {
       let start, end;
-      const month = startOfMonth(addMonths(prevDate, i));
+      const month = startOfMonth(subMonths(prevDate, i));
       start = i === 0 ? Number(format(prevDate, dateFormat, {locale: locale})) - 1 : 0;
-      end = i === differenceInMonths(startDate, prevDate) ? Number(format(lastDate, "d", {locale: locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
+      end = i === differenceInMonths(startDate, prevDate) ? Number(format(startDate, "d", {locale: locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
 
       for (let j = start; j < end; j++) {
-        let currentDay = addDays(month, j);
+        let currentDay = subDays(month, j);
         days.push( /*#__PURE__*/React.createElement("div", {
           id: `${getId(currentDay)}`,
           className: styles.dateDayItem,
