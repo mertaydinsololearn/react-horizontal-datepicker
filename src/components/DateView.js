@@ -49,13 +49,20 @@ const DateView = ({startDate, lastDate, prevDate, locale, selectDate, getSelecte
         const months = [];
         let days = [];
 
+
+    const numberOfMonths = eachMonthOfInterval({
+        start: prevDate,
+        end: startDate
+      });
+      
+
         // const styleItemMarked = marked ? styles.dateDayItemMarked : styles.dateDayItem;
-        for (let i = 0; i <= differenceInMonths(startDate, prevDate) + 1; i++) {
+        for (let i = 0; i < numberOfMonths.length; i++) {
             let start, end;
             const month = startOfMonth(addMonths(prevDate, i));
 
             start = i === 0 ? Number(format(prevDate, dateFormat, {locale: locale})) - 1 : 0;
-            end = i === differenceInMonths(startDate, prevDate) ? Number(format(startDate, "d", {locale:locale})) : Number(format(lastDayOfMonth(month), "d", {locale: locale}));
+            end = i ===  numberOfMonths.length - 1 ? Number(format(subDays(startDate, 1), "d")) : Number(format(lastDayOfMonth(month), "d"));
 
             for (let j = start; j < end; j++) {
                 let currentDay = addDays(month, j);
@@ -64,7 +71,7 @@ const DateView = ({startDate, lastDate, prevDate, locale, selectDate, getSelecte
                     <div id={`${getId(currentDay)}`}
                          className={marked ? styles.dateDayItemMarked : styles.dateDayItem}
                          style={getStyles(currentDay)}
-                         key={currentDay}
+                         key={currentDay.toString() + Math.random()}
                          onClick={() => onDateClick(currentDay)}
                     >
                         <div className={styles.dayLabel}>{format(currentDay, dayFormat, {locale: locale})}</div>
@@ -75,7 +82,7 @@ const DateView = ({startDate, lastDate, prevDate, locale, selectDate, getSelecte
             }
             months.push(
                 <div className={styles.monthContainer}
-                     key={month}
+                     key={month.toString() + Math.random()}
                 >
                     <span className={styles.monthYearLabel} style={labelColor}>
                         {format(month, labelFormat || "MMMM yyyy", {locale: locale})}
@@ -88,6 +95,8 @@ const DateView = ({startDate, lastDate, prevDate, locale, selectDate, getSelecte
             days = [];
 
         }
+
+        
 
         for (let i = 0; i <= differenceInMonths(lastDate, startDate); i++) {
             let start, end;
@@ -103,7 +112,7 @@ const DateView = ({startDate, lastDate, prevDate, locale, selectDate, getSelecte
                     <div id={`${getId(currentDay)}`}
                          className={marked ? styles.dateDayItemMarked : styles.dateDayItem}
                          style={getStyles(currentDay)}
-                         key={currentDay}
+                         key={currentDay.toString() + Math.random()}
                          onClick={() => onDateClick(currentDay)}
                     >
                         <div className={styles.dayLabel}>{format(currentDay, dayFormat, {locale: locale})}</div>
@@ -114,7 +123,7 @@ const DateView = ({startDate, lastDate, prevDate, locale, selectDate, getSelecte
             }
             months.push(
                 <div className={styles.monthContainer}
-                     key={month}
+                     key={month.toString() + Math.random()}
                 >
                     <span className={styles.monthYearLabel} style={labelColor}>
                         {format(month, labelFormat || "MMMM yyyy", {locale: locale})}

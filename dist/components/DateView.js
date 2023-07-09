@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import styles from "./DatePicker.module.css";
-import { addDays, addMonths, differenceInMonths, format, isSameDay, lastDayOfMonth, startOfMonth } from "date-fns";
+import { addDays, subDays, addMonths, differenceInMonths, format, isSameDay, lastDayOfMonth, startOfMonth, eachMonthOfInterval } from "date-fns";
 
 const DateView = ({
   startDate,
@@ -42,20 +42,18 @@ const DateView = ({
     const dateFormat = "d";
     const months = [];
     let days = [];
-    let finished = false;
-    let oneMoreLoop = false;
 
+    const numberOfMonths = eachMonthOfInterval({
+      start: prevDate,
+      end: startDate
+    });
+    
   
-    for (let i = 0; i <= differenceInMonths(startDate, prevDate) || oneMoreLoop ; i++) {
+    for (let i = 0; i < numberOfMonths.length; i++) {
       let start, end;
       const month = startOfMonth(addMonths(prevDate, i));
       start = i === 0 ? Number(format(prevDate, dateFormat)) - 1 : 0;
-      end = oneMoreLoop ? Number(format(startDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
-      if (oneMoreLoop) finished = true; 
-
-      if (i === differenceInMonths(startDate, prevDate) && addMonths(prevDate, i).getTime() < startDate.getTime() ) {
-        oneMoreLoop = true;
-      }
+      end = i ===  numberOfMonths.length - 1 ? Number(format(subDays(startDate, 1), "d")) : Number(format(lastDayOfMonth(month), "d"));
 
       for (let j = start; j < end; j++) {
         let currentDay = addDays(month, j);
@@ -83,7 +81,6 @@ const DateView = ({
         style: i === 0 ? firstSection : null
       }, days)));
       days = [];
-      if (finished) break;
     }
 
 
@@ -110,7 +107,7 @@ const DateView = ({
 
       months.push( /*#__PURE__*/React.createElement("div", {
         className: styles.monthContainer,
-        key: month
+        key: month.toString() + Math.random() + Math.random(),
       }, /*#__PURE__*/React.createElement("span", {
         className: styles.monthYearLabel,
         style: labelColor
