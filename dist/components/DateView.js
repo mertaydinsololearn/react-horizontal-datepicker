@@ -42,13 +42,20 @@ const DateView = ({
     const dateFormat = "d";
     const months = [];
     let days = [];
+    let finished = false;
+    let oneMoreLoop = false;
 
   
-    for (let i = 0; i <= differenceInMonths(startDate, prevDate); i++) {
+    for (let i = 0; i <= differenceInMonths(startDate, prevDate) || oneMoreLoop ; i++) {
       let start, end;
       const month = startOfMonth(addMonths(prevDate, i));
       start = i === 0 ? Number(format(prevDate, dateFormat)) - 1 : 0;
-      end = i === differenceInMonths(startDate, prevDate) ? Number(format(startDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
+      end = oneMoreLoop ? Number(format(startDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
+      if (oneMoreLoop) finished = true; 
+
+      if (i === differenceInMonths(startDate, prevDate) && addMonths(prevDate, i).getTime() < startDate.getTime() ) {
+        oneMoreLoop = true;
+      }
 
       for (let j = start; j < end; j++) {
         let currentDay = addDays(month, j);
@@ -76,6 +83,7 @@ const DateView = ({
         style: i === 0 ? firstSection : null
       }, days)));
       days = [];
+      if (finished) break;
     }
 
 
