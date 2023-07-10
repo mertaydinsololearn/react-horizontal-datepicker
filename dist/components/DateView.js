@@ -72,7 +72,7 @@ const DateView = ({
 
       months.push( /*#__PURE__*/React.createElement("div", {
         className: styles.monthContainer,
-        key: month
+        key: month.toString() + Math.random()
       }, /*#__PURE__*/React.createElement("span", {
         className: styles.monthYearLabel,
         style: labelColor
