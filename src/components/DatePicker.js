@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from "react";
 import { addDays, subDays } from "date-fns";
 import React from "react";
 import hexToRgb from "../global/helpers/hexToRgb";
@@ -7,6 +8,7 @@ import { DateView } from "./DateView";
 import { MonthView } from './MonthView';
 
 const DatePicker = (props) => {
+	const [date, setDate] = useState(props.selectDate);
     const next = (event) => {
         event.preventDefault();
         const e = document.getElementById('container');
@@ -43,7 +45,7 @@ const DatePicker = (props) => {
             <div className={styles.buttonWrapper} style={buttonzIndex}>
                 <button className={styles.button} style={buttonStyle} onClick={prev}>&lt;</button>
             </div>
-            <Component {...props} primaryColor={primaryColor} startDate={startDate} lastDate={lastDate} prevDate={prevDate} locale={props.locale}/>
+            <Component {...props} primaryColor={primaryColor} startDate={startDate} lastDate={lastDate} prevDate={prevDate} locale={props.locale} date={date}/>
             <div className={styles.buttonWrapper} style={buttonzIndex}>
                 <button className={styles.button} style={buttonStyle} onClick={next}>&gt;</button>
             </div>
