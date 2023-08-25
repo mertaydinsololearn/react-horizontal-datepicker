@@ -18,7 +18,7 @@ import {
 } from "date-fns";
 
 
-const DatePicker = ({startDate, lastDate, prevDate, locale, selectDate, getSelectedDay, labelFormat, marked}) => {
+const DatePicker = ({startDate, lastDate, prevDate, locale, selectDate, getSelectedDay, labelFormat,  primaryColor, marked}) => {
   const next = (event) => {
         event.preventDefault();
         const e = document.getElementById('container');
