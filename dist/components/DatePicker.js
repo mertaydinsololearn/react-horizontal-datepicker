@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from "react";
 /* eslint-disable react-hooks/exhaustive-deps */
-import { addDays, subDays } from "date-fns";
+import { subDays } from "date-fns";
 import hexToRgb from "../global/helpers/hexToRgb";
 import styles from "./DatePicker.module.css"
-import { DateView } from "./DateView";
 import { MonthView } from './MonthView';
 
 import {
