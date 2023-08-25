@@ -6,7 +6,7 @@ import hexToRgb from "../global/helpers/hexToRgb";
 import styles from "./DatePicker.module.css"
 import { DateView } from "./DateView";
 import { MonthView } from './MonthView';
-import styles from "./DatePicker.module.css"
+
 import {
     addDays,
     addMonths,
@@ -17,7 +17,7 @@ import {
     startOfMonth
 } from "date-fns";
 
-const DateView = ({
+const DatePicker = ({
   startDate,
   lastDate,
   prevDate,
@@ -204,4 +204,4 @@ const next = (event) => {
   return /*#__PURE__*/React.createElement(React.Fragment, null, renderDays());
 };
 
-export { DateView };
+export { DatePicker };
