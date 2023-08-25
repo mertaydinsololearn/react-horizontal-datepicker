@@ -51,7 +51,6 @@ const next = (event) => {
     let buttonStyle = {background: primaryColor};
     
     const [selectedDate, setSelectedDate] = useState(null);
-    const firstSection = {marginLeft: '40px'};
     const markedStyle = {color: "#8c3737", padding: "2px", fontSize: 12};
     
   const firstSection = {
