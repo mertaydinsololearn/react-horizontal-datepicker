@@ -10,7 +10,7 @@ import { MonthView } from './MonthView';
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) {  key += Math.random(); target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 const DatePicker = props => {
-const [date, setDate] = useState(props.selectDate);
+	const [date, setDate] = useState(props.selectDate.toDateString());
   const next = event => {
     event.preventDefault();
     const e = document.getElementById('container');

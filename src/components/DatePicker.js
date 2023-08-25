@@ -8,7 +8,7 @@ import { DateView } from "./DateView";
 import { MonthView } from './MonthView';
 
 const DatePicker = (props) => {
-	const [date, setDate] = useState(props.selectDate);
+	const [date, setDate] = useState(props.selectDate.toDateString());
     const next = (event) => {
         event.preventDefault();
         const e = document.getElementById('container');
