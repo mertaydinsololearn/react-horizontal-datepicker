@@ -17,15 +17,16 @@ import {
 } from "date-fns";
 
 const DatePicker = ({
-  startDate,
+  startDateGiven,
   lastDate,
-  prevDate,
+  prevDateGiven,
   locale,
   selectDate,
   getSelectedDay,
   primaryColor,
   labelFormat
 }) => {
+    const [selectedDate, setSelectedDate] = useState(null);
 const next = (event) => {
         event.preventDefault();
         const e = document.getElementById('container');
@@ -42,15 +43,14 @@ const next = (event) => {
 
     const primaryColor = props.color? (props.color.indexOf("rgb") > 0?props.color:hexToRgb(props.color)):'rgb(54, 105, 238)';
 
-    const startDate = props.startDate || new Date();
-    const backDate = props.prevDate || null;
+    const startDate = props.startDateGiven || new Date();
+    const backDate = props.prevDateGiven || null;
     const lastDate = addDays(startDate, props.endDate || props.days || 90);
     const prevDate = subDays(startDate, backDate || 90);
 
     let buttonzIndex = {zIndex: 2};
     let buttonStyle = {background: primaryColor};
     
-    const [selectedDate, setSelectedDate] = useState(null);
     const markedStyle = {color: "#8c3737", padding: "2px", fontSize: 12};
     
   const firstSection = {
