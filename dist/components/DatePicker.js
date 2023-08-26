@@ -40,11 +40,11 @@ const next = (event) => {
         e.scrollLeft -= width - 60;
     };
 
-    const primaryColor = props.colorGiven? (props.colorGiven.indexOf("rgb") > 0?props.colorGiven:hexToRgb(props.colorGiven)):'rgb(54, 105, 238)';
+    const primaryColor =  colorGiven? (colorGiven.indexOf("rgb") > 0?colorGiven:hexToRgb(colorGiven)):'rgb(54, 105, 238)';
 
     const startDate = new Date(selectedDate);
-    const backDate = props.prevDateGiven || null;
-    const lastDate = addDays(startDate, props.endDate || props.days || 90);
+    const backDate = prevDateGiven || null;
+    const lastDate = addDays(startDate, endDate || days || 90);
     const prevDate = subDays(startDate, backDate || 90);
 
     let buttonzIndex = {zIndex: 2};
