@@ -197,7 +197,24 @@ const next = (event) => {
       }
     }
   }, [selectDate]);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, renderDays());
+  return /*#__PURE__*/React.createElement("div", {
+    className: styles.container
+  }, /*#__PURE__*/React.createElement("div", {
+    className: styles.buttonWrapper,
+    style: buttonzIndex
+  }, /*#__PURE__*/React.createElement("button", {
+    className: styles.button,
+    style: buttonStyle,
+    onClick: prev
+  }, "<")), n /*#__PURE__*/React.createElement(React.Fragment, null, renderDays()), /*#__PURE__*/React.createElement("div", {
+    className: styles.buttonWrapper,
+    style: buttonzIndex
+  }, /*#__PURE__*/React.createElement("button", {
+    className: styles.button,
+    style: buttonStyle,
+    onClick: next
+  }, ">")));
+};
 };
 
 export { DatePicker };
