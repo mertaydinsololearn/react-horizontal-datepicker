@@ -17,8 +17,8 @@ import {
 } from "date-fns";
 
 const DatePicker = ({
-  startDateGiven,
   prevDateGiven,
+  endDate,
   locale,
   selectDate,
   getSelectedDay,
@@ -42,7 +42,7 @@ const next = (event) => {
 
     const primaryColor = props.colorGiven? (props.colorGiven.indexOf("rgb") > 0?props.colorGiven:hexToRgb(props.colorGiven)):'rgb(54, 105, 238)';
 
-    const startDate = props.startDateGiven || new Date();
+    const startDate = new Date(selectedDate);
     const backDate = props.prevDateGiven || null;
     const lastDate = addDays(startDate, props.endDate || props.days || 90);
     const prevDate = subDays(startDate, backDate || 90);
