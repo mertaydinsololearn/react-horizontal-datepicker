@@ -18,7 +18,6 @@ import {
 
 const DatePicker = ({
   startDateGiven,
-  lastDate,
   prevDateGiven,
   locale,
   selectDate,
