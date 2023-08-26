@@ -22,7 +22,7 @@ const DatePicker = ({
   locale,
   selectDate,
   getSelectedDay,
-  primaryColor,
+  colorGiven,
   labelFormat
 }) => {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -40,7 +40,7 @@ const next = (event) => {
         e.scrollLeft -= width - 60;
     };
 
-    const primaryColor = props.color? (props.color.indexOf("rgb") > 0?props.color:hexToRgb(props.color)):'rgb(54, 105, 238)';
+    const primaryColor = props.colorGiven? (props.colorGiven.indexOf("rgb") > 0?props.colorGiven:hexToRgb(props.colorGiven)):'rgb(54, 105, 238)';
 
     const startDate = props.startDateGiven || new Date();
     const backDate = props.prevDateGiven || null;
