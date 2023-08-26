@@ -1,21 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from "react";
 /* eslint-disable react-hooks/exhaustive-deps */
-import { subDays } from "date-fns";
 import hexToRgb from "../global/helpers/hexToRgb";
 import styles from "./DatePicker.module.css"
 import { MonthView } from './MonthView';
 
-import {
-    addDays,
-    addMonths,
-    differenceInMonths,
-    format,
-    isSameDay,
-    lastDayOfMonth,
-    startOfMonth
-} from "date-fns";
-
+import { addDays, subDays, addMonths, differenceInMonths, format, isSameDay, lastDayOfMonth, startOfMonth, eachMonthOfInterval } from "date-fns";
 const DatePicker = ({
   prevDateGiven,
   endDate,
